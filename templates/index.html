@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Traffic Signal System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .roads {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .road {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .road h3 {
+      margin-bottom: 15px;
+    }
+    .lights {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .light {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+    .red { background: red; }
+    .yellow { background: yellow; }
+    .green { background: green; }
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚦 Smart Traffic Signal System</h1>
+  <div class="roads">
+    <div class="road" id="road1">
+      <h3>Road 1</h3>
+      <div class="lights">
+        <div id="r1-red" class="light"></div>
+        <div id="r1-yellow" class="light"></div>
+        <div id="r1-green" class="light"></div>
+      </div>
+      <p id="timer1">Red Time: 0s</p>
+      <p id="vehicles1">Detected Vehicles: 0</p>
+    </div>
+
+    <div class="road" id="road2">
+      <h3>Road 2</h3>
+      <div class="lights">
+        <div id="r2-red" class="light"></div>
+        <div id="r2-yellow" class="light"></div>
+        <div id="r2-green" class="light"></div>
+      </div>
+      <p id="timer2">Red Time: 0s</p>
+      <p id="vehicles2">Detected Vehicles: 0</p>
+    </div>
+
+    <div class="road" id="road3">
+      <h3>Road 3</h3>
+      <div class="lights">
+        <div id="r3-red" class="light"></div>
+        <div id="r3-yellow" class="light"></div>
+        <div id="r3-green" class="light"></div>
+      </div>
+      <p id="timer3">Red Time: 0s</p>
+      <p id="vehicles3">Detected Vehicles: 0</p>
+    </div>
+
+    <div class="road" id="road4">
+      <h3>Road 4</h3>
+      <div class="lights">
+        <div id="r4-red" class="light"></div>
+        <div id="r4-yellow" class="light"></div>
+        <div id="r4-green" class="light"></div>
+      </div>
+      <p id="timer4">Red Time: 0s</p>
+      <p id="vehicles4">Detected Vehicles: 0</p>
+    </div>
+  </div>
+
+  <script>
+    // Customize timings
+    const roadTimings = {
+      1: { green: 10, yellow: 3, red: 7 },
+      2: { green: 8, yellow: 3, red: 6 },
+      3: { green: 12, yellow: 4, red: 9 },
+      4: { green: 9, yellow: 3, red: 5 }
+    };
+
+    // Random vehicle count
+    function randomVehicles() {
+      return Math.floor(Math.random() * 5);
+    }
+
+    function runSignal(roadId) {
+      let lights = {
+        red: document.getElementById(`r${roadId}-red`),
+        yellow: document.getElementById(`r${roadId}-yellow`),
+        green: document.getElementById(`r${roadId}-green`)
+      };
+      let timerDisplay = document.getElementById(`timer${roadId}`);
+      let vehicleDisplay = document.getElementById(`vehicles${roadId}`);
+      let cycle = ["green", "yellow", "red"];
+      let timings = roadTimings[roadId];
+      let current = 0;
+
+      function nextPhase() {
+        let phase = cycle[current];
+        let duration = timings[phase];
+        let timeLeft = duration;
+
+        // Reset lights
+        lights.red.style.background = "#ccc";
+        lights.yellow.style.background = "#ccc";
+        lights.green.style.background = "#ccc";
+
+        // Set active light
+        lights[phase].style.background = phase;
+
+        // Show vehicles
+        vehicleDisplay.innerText = "Detected Vehicles: " + randomVehicles();
+
+        // Timer text
+        timerDisplay.innerText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Time: ${timeLeft}s`;
+
+        let countdown = setInterval(() => {
+          timeLeft--;
+          timerDisplay.innerText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Time: ${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            current = (current + 1) % cycle.length;
+            nextPhase();
+          }
+        }, 1000);
+      }
+
+      nextPhase();
+    }
+
+    runSignal(1);
+    runSignal(2);
+    runSignal(3);
+    runSignal(4);
+  </script>
+</body>
+</html>

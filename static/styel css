@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f8f8f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.dashboard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.road {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.road h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.light {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 10px auto;
+    opacity: 0.3;
+}
+
+.red { background-color: red; }
+.yellow { background-color: yellow; }
+.green { background-color: green; }
+
+.active { opacity: 1; }
+
+p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.countdown {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
